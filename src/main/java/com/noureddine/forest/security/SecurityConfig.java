@@ -55,7 +55,7 @@ public class SecurityConfig {
                 .authenticationProvider(authenticationProvider)
                /* adding the filter that we will need and it s a custom filter (jwt filter) and we should execute jwtFilter before
         UsernamePasswordAuthenticationFilter to check if the request contains a token,exists ...*/
-                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
     )
 
 
