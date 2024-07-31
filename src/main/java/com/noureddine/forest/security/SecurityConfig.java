@@ -25,7 +25,7 @@ public class SecurityConfig {
 
 
 
-    private JwtFilter jwtAuthFilter;
+    private final JwtFilter jwtAuthFilter;
 
     private final AuthenticationProvider authenticationProvider;
 
@@ -35,7 +35,7 @@ public class SecurityConfig {
 
         http
                 .cors(Customizer.withDefaults())
-                //we have to diable the csrf
+                //we have to disable the csrf
                 .csrf(AbstractHttpConfigurer :: disable)
                 //authorized endpoints
                 .authorizeHttpRequests(req ->
@@ -50,13 +50,16 @@ public class SecurityConfig {
                 )
                 //the type of the session management
                 .sessionManagement(session ->
-                        //when we use STATELESS means we will treat every request like we don t know anything about it
+                        //when we use STATELESS means we will treat every request like we don't know anything about it
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
                /* adding the filter that we will need and it s a custom filter (jwt filter) and we should execute jwtFilter before
         UsernamePasswordAuthenticationFilter to check if the request contains a token,exists ...*/
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-    )
+
+
+                return http.build();
+
 
 
     }
