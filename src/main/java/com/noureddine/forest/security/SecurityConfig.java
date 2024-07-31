@@ -40,8 +40,7 @@ public class SecurityConfig {
                 //authorized endpoints
                 .authorizeHttpRequests(req ->
                         req.requestMatchers(
-                                "/auth/**",
-                                ""
+                                "/auth/**"
 
                         ).permitAll()
                                 //the request at the request matchers don t need to be authenticated but those must be

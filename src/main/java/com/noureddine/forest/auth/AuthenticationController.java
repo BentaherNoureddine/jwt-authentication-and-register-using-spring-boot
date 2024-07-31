@@ -1,6 +1,7 @@
 package com.noureddine.forest.auth;
 
 
+import com.noureddine.forest.exeption.EmailAlreadyExistException;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
@@ -19,11 +20,16 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public ResponseEntity<?> register(
-                    @RequestBody @Valid final RegistrationRequest request
+    public ResponseEntity<?> register(@RequestBody @Valid final RegistrationRequest request){
 
-            ) throws MessagingException {
-                 authenticationService.register(request);
-                 return ResponseEntity.accepted().build();
+        try {
+            authenticationService.register(request);
+            return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully");
+        }catch(EmailAlreadyExistException e){
+           return ResponseEntity.status(HttpStatus.CONFLICT).body("Email already exist");
+        }
+        catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("error while registration user");
+        }
     }
 }

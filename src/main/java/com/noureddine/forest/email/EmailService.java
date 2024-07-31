@@ -1,3 +1,5 @@
+
+/*
 package com.noureddine.forest.email;
 
 
@@ -73,3 +75,6 @@ public class EmailService {
         mailSender.send(mimeMessage);
     }
 }
+
+
+ */

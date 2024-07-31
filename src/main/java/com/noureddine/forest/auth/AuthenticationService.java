@@ -3,27 +3,32 @@ package com.noureddine.forest.auth;
 
 
 import com.noureddine.forest.Role.RoleRepository;
-import com.noureddine.forest.email.EmailService;
-import com.noureddine.forest.email.EmailTemplateName;
-import com.noureddine.forest.user.Token;
+//import com.noureddine.forest.email.EmailService;
+// com.noureddine.forest.email.EmailTemplateName;
+import com.noureddine.forest.exeption.EmailAlreadyExistException;
+import com.noureddine.forest.security.UserDetailsServiceImpl;
+
 import com.noureddine.forest.user.TokenRepository;
 import com.noureddine.forest.user.User;
 import com.noureddine.forest.user.UserRepository;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.security.SecureRandom;
-import java.time.LocalDateTime;
+
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
 
+    private static final Logger log = LoggerFactory.getLogger(AuthenticationService.class);
     private final UserRepository userRepository;
+
+    private final UserDetailsServiceImpl userService;
 
     private final  RoleRepository roleRepository;
 
@@ -31,9 +36,9 @@ public class AuthenticationService {
 
     private final TokenRepository tokenRepository;
 
-    private final  EmailService emailService;
+    //private final  EmailService emailService;
 
-    @Value("${application.mailing.frontend.activation-url}")
+   // @Value("${application.mailing.frontend.activation-url}")
     private String activationUrl;
 
 
@@ -46,22 +51,31 @@ public class AuthenticationService {
                 // todo better exception handling
                 .orElseThrow(() -> new IllegalArgumentException("Role USER was not initialized"));
 
+
+
+        //If an account with the given email already exists, throws an EmailAlreadyExist exception
+        if(userService.emailExists(request.getEmail())){
+             log.error("Email already exists");
+             throw new EmailAlreadyExistException();
+        }
         var user = User.builder()
-                .firstname(request.getFirstname())
-                .lastname(request.getLastname())
-                .email(request.getEmail())
-                .password(passwordEncoder.encode(request.getPassword()))
-                .accountLocked(false)
-                .enabled(false)
-                .roles(List.of(userRole))
-                .build();
+                    .firstname(request.getFirstname())
+                    .lastname(request.getLastname())
+                    .email(request.getEmail())
+                    .password(passwordEncoder.encode(request.getPassword()))
+                    .accountLocked(false)
+                    .enabled(true)
+                    .roles(List.of(userRole))
+                    .build();
 
         userRepository.save(user);
-        sendValidationEmail(user);
+
+
+        //sendValidationEmail(user);
 
 
     }
-
+/*
 
     private void sendValidationEmail(User user) throws MessagingException {
 
@@ -76,6 +90,8 @@ public class AuthenticationService {
                 "Account activation"
         );
     }
+
+
 
     private String generateAndSaveActivationToken(User user) {
 
@@ -110,4 +126,5 @@ public class AuthenticationService {
 
         return codeBuilder.toString();
     }
+     */
 }
