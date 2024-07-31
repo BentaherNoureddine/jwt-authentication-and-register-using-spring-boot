@@ -6,6 +6,7 @@ import com.noureddine.forest.Role.RoleRepository;
 //import com.noureddine.forest.email.EmailService;
 // com.noureddine.forest.email.EmailTemplateName;
 import com.noureddine.forest.exeption.EmailAlreadyExistException;
+import com.noureddine.forest.security.JwtService;
 import com.noureddine.forest.security.UserDetailsServiceImpl;
 
 import com.noureddine.forest.user.TokenRepository;
@@ -15,10 +16,15 @@ import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -36,6 +42,9 @@ public class AuthenticationService {
 
     private final TokenRepository tokenRepository;
 
+    private final AuthenticationManager authenticationManager;
+    private final JwtService jwtService;
+
     //private final  EmailService emailService;
 
    // @Value("${application.mailing.frontend.activation-url}")
@@ -45,6 +54,7 @@ public class AuthenticationService {
 
 
 
+    //register method that will be called at the authentication controller
     public void register(RegistrationRequest request) throws MessagingException {
 
         var userRole = roleRepository.findByName("USER")
@@ -75,6 +85,28 @@ public class AuthenticationService {
 
 
     }
+
+
+    //authentication method that will be called at the authentication controller
+    public AuthenticationResponse authenticate(AuthenticationRequest request) {
+
+        var auth = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        request.getEmail(),
+                        request.getPassword()
+                )
+        );
+
+        var claims = new HashMap<String, Object>();
+        var user = ((User) auth.getPrincipal());
+        claims.put("fullName", user.fullName());
+
+        var jwtToken = jwtService.generateToken(claims, user);
+
+        return AuthenticationResponse.builder().token(jwtToken).build();
+    }
+
+
 /*
 
     private void sendValidationEmail(User user) throws MessagingException {

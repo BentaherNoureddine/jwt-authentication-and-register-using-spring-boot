@@ -3,7 +3,7 @@ package com.noureddine.forest.auth;
 
 import com.noureddine.forest.exeption.EmailAlreadyExistException;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.mail.MessagingException;
+//import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,8 +18,9 @@ public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
 
+
+    //REGISTRATION API
     @PostMapping("/register")
-    @ResponseStatus(HttpStatus.ACCEPTED)
     public ResponseEntity<?> register(@RequestBody @Valid final RegistrationRequest request){
 
         try {
@@ -32,4 +33,17 @@ public class AuthenticationController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("error while registration user");
         }
     }
+
+
+    //AUTHENTICATION API
+    @PostMapping("/authenticate")
+    public  ResponseEntity<AuthenticationResponse> authenticate(
+            @RequestBody @Valid final AuthenticationRequest request
+    ){
+    return ResponseEntity.ok(authenticationService.authenticate(request));
+
+
+
+    }
+
 }

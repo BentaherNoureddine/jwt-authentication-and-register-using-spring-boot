@@ -1,6 +1,8 @@
 package com.noureddine.forest.security;
 
 
+import com.noureddine.forest.user.TokenRepository;
+import com.noureddine.forest.user.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -23,6 +25,7 @@ public class JwtService {
     private String SECRET_KEY;
     @Value("${application.security.jwt.expiration}")
     private long jwtExpiration;
+
 
    public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -60,7 +63,7 @@ public class JwtService {
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + expiration))
                 .claim("authorities", authorities)
-                .signWith(getSignInKey(), SignatureAlgorithm.RS256)
+                .signWith(getSignInKey())
                 .compact();
     }
 
@@ -85,6 +88,9 @@ public class JwtService {
                 .parseClaimsJws(token)
                 .getBody();
     }
+
+
+
 
     private Key getSignInKey() {
         byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
