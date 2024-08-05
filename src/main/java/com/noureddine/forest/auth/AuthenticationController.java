@@ -2,8 +2,6 @@ package com.noureddine.forest.auth;
 
 
 import com.noureddine.forest.exeption.EmailAlreadyExistException;
-import io.swagger.v3.oas.annotations.tags.Tag;
-//import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("auth")
 @RequiredArgsConstructor
-@Tag(name ="authentication")
 public class AuthenticationController {
 
     private final AuthenticationService authenticationService;

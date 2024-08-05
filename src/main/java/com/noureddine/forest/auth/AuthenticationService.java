@@ -3,22 +3,15 @@ package com.noureddine.forest.auth;
 
 
 import com.noureddine.forest.Role.RoleRepository;
-//import com.noureddine.forest.email.EmailService;
-// com.noureddine.forest.email.EmailTemplateName;
 import com.noureddine.forest.exeption.EmailAlreadyExistException;
 import com.noureddine.forest.security.JwtService;
 import com.noureddine.forest.security.UserDetailsServiceImpl;
-
-import com.noureddine.forest.user.TokenRepository;
 import com.noureddine.forest.user.User;
 import com.noureddine.forest.user.UserRepository;
-import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -40,25 +33,18 @@ public class AuthenticationService {
 
     private final PasswordEncoder passwordEncoder;
 
-    private final TokenRepository tokenRepository;
 
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
-
-    //private final  EmailService emailService;
-
-   // @Value("${application.mailing.frontend.activation-url}")
-    private String activationUrl;
 
 
 
 
 
     //register method that will be called at the authentication controller
-    public void register(RegistrationRequest request) throws MessagingException {
+    public void register(RegistrationRequest request) {
 
         var userRole = roleRepository.findByName("USER")
-                // todo better exception handling
                 .orElseThrow(() -> new IllegalArgumentException("Role USER was not initialized"));
 
 
@@ -74,14 +60,10 @@ public class AuthenticationService {
                     .email(request.getEmail())
                     .password(passwordEncoder.encode(request.getPassword()))
                     .accountLocked(false)
-                    .enabled(true)
                     .roles(List.of(userRole))
                     .build();
 
         userRepository.save(user);
-
-
-        //sendValidationEmail(user);
 
 
     }
@@ -100,63 +82,11 @@ public class AuthenticationService {
         var claims = new HashMap<String, Object>();
         var user = ((User) auth.getPrincipal());
         claims.put("fullName", user.fullName());
-
         var jwtToken = jwtService.generateToken(claims, user);
 
+        //return a login token
         return AuthenticationResponse.builder().token(jwtToken).build();
     }
 
 
-/*
-
-    private void sendValidationEmail(User user) throws MessagingException {
-
-        var newToken = generateAndSaveActivationToken(user);
-
-        emailService.sendEmail(
-                user.getEmail(),
-                user.fullName(),
-                EmailTemplateName.ACTIVATE_ACCOUNT,
-                activationUrl,
-                newToken,
-                "Account activation"
-        );
-    }
-
-
-
-    private String generateAndSaveActivationToken(User user) {
-
-        //generate a token
-        String generatedToken = generateActivationCode(6);
-
-        var token = Token.builder()
-                .token(generatedToken)
-                .createdAt(LocalDateTime.now())
-                .expiresAt(LocalDateTime.now().plusMinutes(30))
-                .user(user)
-                .build();
-
-        tokenRepository.save(token);
-
-        return generatedToken;
-
-
-
-    }
-
-    private String generateActivationCode(int length) {
-
-        String characters = "0123456789";
-        StringBuilder codeBuilder = new StringBuilder();
-        SecureRandom secureRandom = new SecureRandom();
-        for (int i = 0; i < length; i++) {
-
-            int randomIndex = secureRandom.nextInt(characters.length());
-            codeBuilder.append(characters.charAt(randomIndex));
-        }
-
-        return codeBuilder.toString();
-    }
-     */
 }

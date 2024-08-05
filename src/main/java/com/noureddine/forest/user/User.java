@@ -43,7 +43,6 @@ public class User implements UserDetails, Principal {
 
     private boolean accountLocked;
 
-    private boolean enabled;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
@@ -90,10 +89,6 @@ public class User implements UserDetails, Principal {
         return true;
     }
 
-    @Override
-    public boolean isEnabled() {
-        return enabled;
-    }
 
     @Override
     public String getName() {
