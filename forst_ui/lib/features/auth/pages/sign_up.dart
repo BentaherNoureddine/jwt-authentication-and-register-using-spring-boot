@@ -39,6 +39,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
             'Content-Type': 'application/json ; charset=UTF-8',
           });
       if (response.statusCode == 201) {
+        for(int i=0;i<10;i++){
+          print(response.statusCode);
+        }
         print("account created successfully");
         Navigator.pushReplacement(
           context,

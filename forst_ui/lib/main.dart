@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:forst_ui/features/auth/pages/login_screen.dart';
-import 'package:forst_ui/features/auth/pages/sign_up.dart';
-import 'package:forst_ui/features/report/widgets/location_page.dart';
+import 'package:forst_ui/features/report/pages/report_page.dart';
+
+
 
 void main() {
   runApp(const MyApp());
@@ -10,14 +10,14 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
       ),
-      home: const SignUpScreen(),
+      home: const ReportScreen(),
     );
   }
 }

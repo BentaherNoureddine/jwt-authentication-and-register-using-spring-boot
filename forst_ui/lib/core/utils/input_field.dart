@@ -6,7 +6,7 @@ class InputFiled extends StatelessWidget {
   final bool obscureText;
 
   const InputFiled(
-      {required this.hintText,
+      {super.key, required this.hintText,
       required this.controller,
       required this.obscureText});
 

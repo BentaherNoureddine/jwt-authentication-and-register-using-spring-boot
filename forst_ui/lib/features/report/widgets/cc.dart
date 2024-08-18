@@ -1,9 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:forst_ui/features/report/entities/category_model.dart';
 import 'package:forst_ui/features/report/entities/report_model.dart';
 import 'package:forst_ui/features/report/repositories/report_repository.dart';
-
-
 
 
 class AdminHomePage extends StatefulWidget {
@@ -15,12 +13,6 @@ class AdminHomePage extends StatefulWidget {
 
 class _AdminHomePageState extends State<AdminHomePage> {
   late Future<List<Report>> _reportsFuture;
-
-  Category currentCategory = Category.ALL;
-
-   void doFilter(Category category){
-
-  }
 
   @override
   void initState() {
@@ -36,31 +28,36 @@ class _AdminHomePageState extends State<AdminHomePage> {
     final ThemeData theme = Theme.of(context);
 
     return reports.map((report) {
-      return GestureDetector(
-        child: Card(
-          clipBehavior: Clip.antiAlias,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-
-              Center(child: Text(report.title)),
-
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        report.reporterId,
-                        style: theme.textTheme.titleSmall,
-                      ),
-                    ],
-                  ),
+      return Card(
+        clipBehavior: Clip.antiAlias,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            AspectRatio(
+              aspectRatio: 18 / 11,
+              child: Text(report.title),
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      report.address,
+                      style: theme.textTheme.titleLarge,
+                      maxLines: 1,
+                    ),
+                    const SizedBox(height: 8.0),
+                    Text(
+                      report.reporterId,
+                      style: theme.textTheme.titleSmall,
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       );
     }).toList();
@@ -79,7 +76,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
             print("Menu button");
           },
         ),
-        title: const Text('REPORTS '),
+        title: const Text('SHRINE'),
         actions: <Widget>[
           IconButton(
             onPressed: () {
@@ -92,7 +89,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
           ),
           IconButton(
             onPressed: () {
-              doFilter(currentCategory);
+              print('Filter button');
             },
             icon: const Icon(
               Icons.tune,
@@ -112,7 +109,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
             return const Center(child: Text('No reports available.'));
           } else {
             return GridView.count(
-              crossAxisCount: 1,
+              crossAxisCount: 2,
               padding: const EdgeInsets.all(16),
               childAspectRatio: 8 / 9,
               children: _buildGridCards(context, snapshot.data!),

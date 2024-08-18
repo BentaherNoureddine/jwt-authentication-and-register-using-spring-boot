@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 abstract class LocationHandler {
   static Future<bool> handleLocationPermission(BuildContext context) async {
@@ -13,7 +14,6 @@ abstract class LocationHandler {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-
               title: const Center(child: Text("Location services is disabled")),
               content: const Text("Please enable the location service "),
               actions: [
@@ -42,17 +42,17 @@ abstract class LocationHandler {
       final hasPermission = await handleLocationPermission(context);
       if (!hasPermission) return null;
       return await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.best,
+        desiredAccuracy: LocationAccuracy.high,
       );
     } catch (e) {
       return null;
     }
   }
 
-  static Future<String?> getAddressFromLatLng(Position position) async {
+  static Future<String?> getAddressFromLatLng(LatLng latlng) async {
     try {
       List<Placemark> placeMarks =
-      await placemarkFromCoordinates(position.latitude, position.longitude);
+      await placemarkFromCoordinates(latlng.latitude, latlng.longitude);
       Placemark place = placeMarks[0];
       return "${place.street}, ${place.subLocality},${place.subAdministrativeArea}, ${place.postalCode}";
     } catch (e) {
