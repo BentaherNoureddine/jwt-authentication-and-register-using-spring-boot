@@ -1,7 +1,7 @@
-package com.noureddine.forest.auth;
+package com.noureddine.users.auth;
 
 
-import com.noureddine.forest.exeption.EmailAlreadyExistException;
+import com.noureddine.users.exeption.EmailAlreadyExistException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("auth")
+@CrossOrigin(origins = {"http://localhost:9654" ,"http://192.168.0.17"})
 @RequiredArgsConstructor
 public class AuthenticationController {
 
@@ -33,6 +34,7 @@ public class AuthenticationController {
 
 
     //AUTHENTICATION API
+    @CrossOrigin(origins ="http://localhost:9654" )
     @PostMapping("/authenticate")
     public  ResponseEntity<AuthenticationResponse> authenticate(
             @RequestBody @Valid final AuthenticationRequest request

@@ -1,8 +1,8 @@
-package com.noureddine.forest.security;
+package com.noureddine.users.security;
 
 
 
-import com.noureddine.forest.repositories.UserRepository;
+import com.noureddine.users.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

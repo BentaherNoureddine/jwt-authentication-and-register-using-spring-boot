@@ -1,4 +1,4 @@
-package com.noureddine.forest.security;
+package com.noureddine.users.security;
 
 
 import lombok.RequiredArgsConstructor;

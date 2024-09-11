@@ -1,4 +1,4 @@
-package com.noureddine.forest.auth;
+package com.noureddine.users.auth;
 
 
 import jakarta.validation.constraints.Email;

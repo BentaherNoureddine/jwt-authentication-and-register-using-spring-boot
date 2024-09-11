@@ -1,6 +1,6 @@
-package com.noureddine.forest.repositories;
+package com.noureddine.users.repositories;
 
-import com.noureddine.forest.models.User;
+import com.noureddine.users.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

@@ -1,4 +1,4 @@
-package com.noureddine.forest.models;
+package com.noureddine.users.models;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -18,6 +18,8 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @EntityListeners(AuditingEntityListener.class)
+
+         //todo this class will be changed
 public class Role {
 
 

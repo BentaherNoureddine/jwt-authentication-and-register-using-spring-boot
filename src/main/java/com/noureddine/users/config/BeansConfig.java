@@ -1,4 +1,4 @@
-package com.noureddine.forest.config;
+package com.noureddine.users.config;
 
 
 import lombok.RequiredArgsConstructor;

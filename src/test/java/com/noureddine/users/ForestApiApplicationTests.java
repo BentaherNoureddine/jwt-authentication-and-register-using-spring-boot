@@ -1,4 +1,4 @@
-package com.noureddine.forest;
+package com.noureddine.users;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

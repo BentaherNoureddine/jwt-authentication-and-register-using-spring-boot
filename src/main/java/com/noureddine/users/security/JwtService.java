@@ -1,4 +1,4 @@
-package com.noureddine.forest.security;
+package com.noureddine.users.security;
 
 
 import io.jsonwebtoken.Claims;
@@ -53,6 +53,7 @@ public class JwtService {
                 .stream().
                 map(GrantedAuthority::getAuthority)
                 .toList();
+
         return Jwts
                 .builder()
                 .setClaims(extraClaims)

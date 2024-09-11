@@ -1,4 +1,4 @@
-package com.noureddine.forest.models;
+package com.noureddine.users.models;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -38,12 +38,11 @@ public class User implements UserDetails, Principal {
     @Column(unique = true)
     private String email;
 
+    private Integer score;
+
     private String password;
 
     private boolean accountLocked;
-
-
-    private String currentPosition;
 
 
     @CreatedDate
@@ -100,10 +99,6 @@ public class User implements UserDetails, Principal {
     }
 
 
-
-    public String getUserPosition() {
-        return currentPosition;
-    }
 
     public String fullName(){
         return firstname + " " + lastname;

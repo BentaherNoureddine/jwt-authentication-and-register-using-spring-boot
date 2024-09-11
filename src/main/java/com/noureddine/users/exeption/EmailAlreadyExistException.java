@@ -1,4 +1,4 @@
-package com.noureddine.forest.exeption;
+package com.noureddine.users.exeption;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;

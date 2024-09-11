@@ -1,13 +1,13 @@
-package com.noureddine.forest.auth;
+package com.noureddine.users.auth;
 
 
 
-import com.noureddine.forest.repositories.RoleRepository;
-import com.noureddine.forest.exeption.EmailAlreadyExistException;
-import com.noureddine.forest.security.JwtService;
-import com.noureddine.forest.security.UserDetailsServiceImpl;
-import com.noureddine.forest.models.User;
-import com.noureddine.forest.repositories.UserRepository;
+import com.noureddine.users.repositories.RoleRepository;
+import com.noureddine.users.exeption.EmailAlreadyExistException;
+import com.noureddine.users.security.JwtService;
+import com.noureddine.users.security.UserDetailsServiceImpl;
+import com.noureddine.users.models.User;
+import com.noureddine.users.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,8 +15,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-
 import java.util.HashMap;
 import java.util.List;
 
@@ -60,6 +58,7 @@ public class AuthenticationService {
                     .email(request.getEmail())
                     .password(passwordEncoder.encode(request.getPassword()))
                     .accountLocked(false)
+                    .score(0)
                     .roles(List.of(userRole))
                     .build();
 

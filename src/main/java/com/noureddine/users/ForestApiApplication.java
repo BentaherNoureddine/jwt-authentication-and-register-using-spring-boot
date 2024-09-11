@@ -1,10 +1,12 @@
-package com.noureddine.forest;
+package com.noureddine.users;
 
-import com.noureddine.forest.models.Role;
-import com.noureddine.forest.repositories.RoleRepository;
+import com.noureddine.users.models.Role;
+import com.noureddine.users.repositories.RoleRepository;
 import org.springframework.boot.CommandLineRunner;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.ReactiveDiscoveryClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -12,7 +14,6 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @SpringBootApplication
 @EnableJpaAuditing
 @EnableAsync
-
 public class ForestApiApplication {
 
     public static void main(String[] args) {
@@ -27,4 +28,6 @@ public class ForestApiApplication {
             }
         };
     }
+
+
 }
