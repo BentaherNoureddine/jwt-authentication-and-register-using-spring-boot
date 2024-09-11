@@ -1,6 +1,5 @@
-package com.noureddine.forest.user;
+package com.noureddine.forest.models;
 
-import com.noureddine.forest.Role.Role;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -44,6 +43,9 @@ public class User implements UserDetails, Principal {
     private boolean accountLocked;
 
 
+    private String currentPosition;
+
+
     @CreatedDate
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
@@ -53,8 +55,11 @@ public class User implements UserDetails, Principal {
     @Column(insertable = false)
     private LocalDateTime lastModifiedDate;
 
+
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roles;
+
+
 
 
 
@@ -89,13 +94,19 @@ public class User implements UserDetails, Principal {
         return true;
     }
 
-
     @Override
     public String getName() {
         return email;
     }
 
+
+
+    public String getUserPosition() {
+        return currentPosition;
+    }
+
     public String fullName(){
         return firstname + " " + lastname;
     }
+
 }

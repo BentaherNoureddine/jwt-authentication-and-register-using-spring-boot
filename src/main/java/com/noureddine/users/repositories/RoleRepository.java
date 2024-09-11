@@ -1,5 +1,6 @@
-package com.noureddine.forest.Role;
+package com.noureddine.forest.repositories;
 
+import com.noureddine.forest.models.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

@@ -1,7 +1,7 @@
 package com.noureddine.forest;
 
-import com.noureddine.forest.Role.Role;
-import com.noureddine.forest.Role.RoleRepository;
+import com.noureddine.forest.models.Role;
+import com.noureddine.forest.repositories.RoleRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -2,7 +2,7 @@ package com.noureddine.forest.security;
 
 
 
-import com.noureddine.forest.user.UserRepository;
+import com.noureddine.forest.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,7 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class
+UserDetailsServiceImpl implements UserDetailsService {
 
     private final UserRepository userRepository;
 

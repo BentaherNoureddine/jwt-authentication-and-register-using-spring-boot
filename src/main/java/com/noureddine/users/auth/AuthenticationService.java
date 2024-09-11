@@ -2,12 +2,12 @@ package com.noureddine.forest.auth;
 
 
 
-import com.noureddine.forest.Role.RoleRepository;
+import com.noureddine.forest.repositories.RoleRepository;
 import com.noureddine.forest.exeption.EmailAlreadyExistException;
 import com.noureddine.forest.security.JwtService;
 import com.noureddine.forest.security.UserDetailsServiceImpl;
-import com.noureddine.forest.user.User;
-import com.noureddine.forest.user.UserRepository;
+import com.noureddine.forest.models.User;
+import com.noureddine.forest.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
